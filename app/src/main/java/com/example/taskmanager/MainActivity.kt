@@ -29,16 +29,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up the toolbar
+        setSupportActionBar(binding.toolbar)
+
         // Set up navigation
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-
-        // Set up the ActionBar
-        setSupportActionBar(binding.toolbar) // Make sure you have a toolbar in activity_main.xml
         setupActionBarWithNavController(navController)
 
-        // Request notification permission and schedule reminders
+        // Your existing notification and reminder setup
         requestNotificationPermission()
         scheduleTaskReminders()
     }
@@ -59,7 +59,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.nav_host_fragment).navigateUp() || super.onSupportNavigateUp()
+        return findNavController(R.id.nav_host_fragment).navigateUp()
+                || super.onSupportNavigateUp()
     }
 
     private fun requestNotificationPermission() {

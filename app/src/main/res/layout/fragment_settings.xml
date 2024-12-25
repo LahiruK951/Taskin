@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -29,7 +30,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Task Manager v1.0\n\nDeveloped by Your Name\n\nA simple and efficient task management application."
+        android:text="Task Manager v1.0\n\nA simple and efficient task management application."
         android:padding="16dp"/>
 
 </LinearLayout>

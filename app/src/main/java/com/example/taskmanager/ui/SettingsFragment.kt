@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.taskmanager.databinding.FragmentSettingsBinding
 import com.example.taskmanager.util.ThemeManager
@@ -24,18 +23,16 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupDarkModeSwitch()
+    }
 
-        // Initialize switch state
-        binding.switchDarkMode.isChecked = ThemeManager.isDarkMode(requireContext())
-
-        // Set up dark mode switch listener
-        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    private fun setupDarkModeSwitch() {
+        binding.switchDarkMode.apply {
+            isChecked = ThemeManager.isDarkMode(requireContext())
+            setOnCheckedChangeListener { _, isChecked ->
+                ThemeManager.saveThemeMode(requireContext(), isChecked)
+                ThemeManager.applyTheme(isChecked)
             }
-            ThemeManager.saveThemeMode(requireContext(), isChecked)
         }
     }
 
