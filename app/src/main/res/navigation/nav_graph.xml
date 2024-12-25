@@ -46,4 +46,10 @@
             android:id="@+id/action_calendarView_to_taskDetails"
             app:destination="@id/taskDetailsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.taskmanager.ui.SettingsFragment"
+        android:label="Settings">
+    </fragment>
 </navigation>
