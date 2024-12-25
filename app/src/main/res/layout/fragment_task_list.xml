@@ -18,7 +18,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="Add new task"
-        app:tint="@color/white"
+        app:tint="@android:color/white"
         app:backgroundTint="?attr/colorPrimary"
         app:srcCompat="@drawable/ic_add" />
 

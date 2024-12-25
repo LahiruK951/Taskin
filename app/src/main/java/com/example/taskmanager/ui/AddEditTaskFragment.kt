@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentAddEditTaskBinding
 import com.example.taskmanager.model.Priority
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import java.util.Calendar
 
 class AddEditTaskFragment : Fragment() {
@@ -40,14 +41,13 @@ class AddEditTaskFragment : Fragment() {
     }
 
     private fun setupUI() {
-        ArrayAdapter.createFromResource(
+        val priorities = resources.getStringArray(R.array.priority_levels)
+        val arrayAdapter = ArrayAdapter(
             requireContext(),
-            R.array.priority_levels,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerPriority.adapter = adapter
-        }
+            android.R.layout.simple_list_item_1,
+            priorities
+        )
+        (binding.spinnerPriority as? MaterialAutoCompleteTextView)?.setAdapter(arrayAdapter)
     }
 
     private fun loadTaskIfEditing() {
@@ -95,10 +95,11 @@ class AddEditTaskFragment : Fragment() {
             val description = binding.editTextDescription.text.toString()
             val dueDate = binding.editTextDueDate.text.toString()
 
-            val priority = when(binding.spinnerPriority.selectedItemPosition) {
-                0 -> Priority.LOW
-                1 -> Priority.MEDIUM
-                2 -> Priority.HIGH
+            // Get priority from the selected text instead of position
+            val priority = when(binding.spinnerPriority.text.toString()) {
+                "Low Priority" -> Priority.LOW
+                "Medium Priority" -> Priority.MEDIUM
+                "High Priority" -> Priority.HIGH
                 else -> Priority.LOW
             }
 
