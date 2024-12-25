@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskListBinding
+import android.app.AlertDialog
 
 class TaskListFragment : Fragment() {
     private var _binding: FragmentTaskListBinding? = null
@@ -68,8 +68,8 @@ class TaskListFragment : Fragment() {
 
     private fun setupSwipeToDelete() {
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(
-            0, // Drag directions (we don't need drag & drop)
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT // Swipe directions
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
                                 target: RecyclerView.ViewHolder) = false
@@ -77,7 +77,18 @@ class TaskListFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val task = taskAdapter.getTaskAt(position)
-                viewModel.deleteTask(task)
+
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Delete Task")
+                    .setMessage("Are you sure you want to delete this task?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        viewModel.deleteTask(task)
+                    }
+                    .setNegativeButton("No") { _, _ ->
+                        // Restore the item if user cancels
+                        taskAdapter.notifyItemChanged(position)
+                    }
+                    .show()
             }
         }
         ItemTouchHelper(swipeHandler).attachToRecyclerView(binding.recyclerView)
@@ -87,6 +98,4 @@ class TaskListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

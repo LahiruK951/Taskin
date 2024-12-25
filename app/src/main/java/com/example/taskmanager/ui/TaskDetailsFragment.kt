@@ -1,5 +1,6 @@
 package com.example.taskmanager.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +46,11 @@ class TaskDetailsFragment : Fragment() {
     private fun updateUI(task: Task) {
         binding.apply {
             textViewTitle.text = task.title
-            textViewDescription.text = task.description
+            textViewDescription.text = if (task.description.isNotEmpty()) {
+                task.description
+            } else {
+                "No description provided"
+            }
             textViewDueDate.text = "Due: ${task.dueDate}"
             textViewPriority.text = "Priority: ${task.priority}"
             checkBoxCompleted.isChecked = task.isCompleted
@@ -61,12 +66,30 @@ class TaskDetailsFragment : Fragment() {
             }
 
             buttonDelete.setOnClickListener {
+                showDeleteConfirmationDialog()
+            }
+
+            buttonEdit.setOnClickListener {
+                currentTask?.let { task ->
+                    val action = TaskDetailsFragmentDirections.actionTaskDetailsToEditTask(task.id)
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Task")
+            .setMessage("Are you sure you want to delete this task?")
+            .setPositiveButton("Yes") { _, _ ->
                 currentTask?.let {
                     viewModel.deleteTask(it)
                     findNavController().navigateUp()
                 }
             }
-        }
+            .setNegativeButton("No", null)
+            .show()
     }
 
     override fun onDestroyView() {

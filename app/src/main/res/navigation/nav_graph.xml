@@ -19,7 +19,12 @@
     <fragment
         android:id="@+id/addEditTaskFragment"
         android:name="com.example.taskmanager.ui.AddEditTaskFragment"
-        android:label="Add Task" />
+        android:label="Add Task">
+        <argument
+            android:name="taskId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
 
     <fragment
         android:id="@+id/taskDetailsFragment"
@@ -28,5 +33,8 @@
         <argument
             android:name="taskId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_taskDetails_to_editTask"
+            app:destination="@id/addEditTaskFragment" />
     </fragment>
 </navigation>
