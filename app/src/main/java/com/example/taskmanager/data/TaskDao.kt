@@ -20,4 +20,7 @@ interface TaskDao {
 
     @Delete
     suspend fun deleteTask(task: Task)
+
+    @Query("SELECT * FROM tasks WHERE dueDate = :date")
+    suspend fun getTasksDueOn(date: String): List<Task>
 }

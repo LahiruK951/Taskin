@@ -57,4 +57,16 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         }
         return taskLiveData
     }
+
+    fun getTasksForDate(date: String): LiveData<List<Task>> {
+        val tasksForDate = MutableLiveData<List<Task>>()
+        viewModelScope.launch {
+            tasks.value?.let { allTasks ->
+                tasksForDate.value = allTasks.filter { task ->
+                    task.dueDate == date
+                }
+            }
+        }
+        return tasksForDate
+    }
 }

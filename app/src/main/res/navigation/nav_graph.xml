@@ -37,4 +37,13 @@
             android:id="@+id/action_taskDetails_to_editTask"
             app:destination="@id/addEditTaskFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/calendarViewFragment"
+        android:name="com.example.taskmanager.ui.CalendarViewFragment"
+        android:label="Calendar View">
+        <action
+            android:id="@+id/action_calendarView_to_taskDetails"
+            app:destination="@id/taskDetailsFragment" />
+    </fragment>
 </navigation>
