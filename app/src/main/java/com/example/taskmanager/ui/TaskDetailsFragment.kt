@@ -9,12 +9,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.taskmanager.databinding.FragmentTaskDetailsBinding
+import com.example.taskmanager.model.Task
 
 class TaskDetailsFragment : Fragment() {
     private var _binding: FragmentTaskDetailsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: TaskViewModel by activityViewModels()
     private val args: TaskDetailsFragmentArgs by navArgs()
+    private var currentTask: Task? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,28 +29,41 @@ class TaskDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupButtons()
+    }
 
+    private fun setupObservers() {
         viewModel.getTaskById(args.taskId).observe(viewLifecycleOwner) { task ->
             task?.let {
-                binding.apply {
-                    textViewTitle.text = it.title
-                    textViewDescription.text = it.description
-                    textViewDueDate.text = "Due: ${it.dueDate}"
-                    textViewPriority.text = "Priority: ${it.priority}"
-                    checkBoxCompleted.isChecked = it.isCompleted
+                currentTask = it
+                updateUI(it)
+            }
+        }
+    }
 
-                    checkBoxCompleted.setOnCheckedChangeListener { _, isChecked ->
-                        viewModel.updateTaskStatus(it.id, isChecked)
-                    }
+    private fun updateUI(task: Task) {
+        binding.apply {
+            textViewTitle.text = task.title
+            textViewDescription.text = task.description
+            textViewDueDate.text = "Due: ${task.dueDate}"
+            textViewPriority.text = "Priority: ${task.priority}"
+            checkBoxCompleted.isChecked = task.isCompleted
+        }
+    }
 
-                    buttonEdit.setOnClickListener {
-                        // Navigate to edit task (implement later)
-                    }
+    private fun setupButtons() {
+        binding.apply {
+            checkBoxCompleted.setOnCheckedChangeListener { _, isChecked ->
+                currentTask?.let {
+                    viewModel.updateTaskStatus(it.id, isChecked)
+                }
+            }
 
-                    buttonDelete.setOnClickListener {
-                        viewModel.deleteTask(task)
-                        findNavController().navigateUp()
-                    }
+            buttonDelete.setOnClickListener {
+                currentTask?.let {
+                    viewModel.deleteTask(it)
+                    findNavController().navigateUp()
                 }
             }
         }
