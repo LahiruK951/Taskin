@@ -51,7 +51,6 @@ class TaskListFragment : Fragment() {
         binding.recyclerView.apply {
             adapter = taskAdapter
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 
