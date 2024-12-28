@@ -21,7 +21,7 @@
                 android:id="@+id/editTextTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Task Title" />
+                android:hint="@string/task_title" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -34,7 +34,7 @@
                 android:id="@+id/editTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description"
+                android:hint="@string/task_description"
                 android:inputType="textMultiLine"
                 android:minLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -49,7 +49,7 @@
                 android:id="@+id/editTextDueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Due Date"
+                android:hint="@string/due_date"
                 android:focusable="false"
                 android:drawableEnd="@drawable/ic_calendar" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
-                android:hint="Priority"/>
+                android:hint="@string/priority"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +73,7 @@
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Task"
+            android:text="@string/save_task"
             android:padding="12dp"/>
 
     </LinearLayout>

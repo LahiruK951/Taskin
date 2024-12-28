@@ -2,6 +2,13 @@
     <string name="app_name">TaskManager</string>
     <string name="about">About</string>
     <string name="version">v1.0</string>
-    <string name="author">By Lahiru Karunarathna</string>
-    <string name="appDesc">A simple and efficient task management application.</string>
+    <string name="author">By LahiruKarunarathna</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="app_info">TaskManager\nv1.0\nBy Lahiru Karunarathna\nA simple and efficient task management application.</string>
+    <string name="due_date">Due Date</string>
+    <string name="priority">Priority</string>
+    <string name="save_task">Save Task</string>
+    <string name="task_title">Task Title</string>
+    <string name="task_description">Description</string>
+    <string name="add_new_task">Add new task</string>
 </resources>
